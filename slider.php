@@ -2,14 +2,19 @@
 
 <section class="content-header">
 	<div class="content-header-left">
-		<h1>View FAQs</h1>
+		<h1>View Sliders</h1>
 	</div>
 	<div class="content-header-right">
-		<a href="faq-add.php" class="btn btn-primary btn-sm">Add FAQ</a>
+		<a href="slider-add.php" class="btn btn-primary btn-sm">Add Slider</a>
 	</div>
 </section>
 
 <section class="content">
+<style>
+		#st-2 {
+    display: none;
+}
+</style>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="box box-info">
@@ -17,26 +22,48 @@
 					<table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th width="30">SL</th>
-								<th width="100">Title</th>
-								<th width="80">Action</th>
+								<th>SL</th>
+								<th>Photo</th>
+								<th>Heading</th>
+								<th>Content</th>
+								<th>Button Text</th>
+								<th>Button URL</th>
+								<th>Position</th>
+								<th width="140">Action</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
 							$i=0;
-							$statement = $pdo->prepare("SELECT * FROM tbl_faq");
+							$statement = $pdo->prepare("SELECT
+														
+														id,
+														photo,
+														heading,
+														content,
+														button_text,
+														button_url,
+														position
+
+							                           	FROM tbl_slider
+							                           	
+							                           	");
 							$statement->execute();
-							$result = $statement->fetchAll(PDO::FETCH_ASSOC);
+							$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
 							foreach ($result as $row) {
 								$i++;
 								?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $row['faq_title']; ?></td>
+									<td style="width:150px;"><img src="../assets/uploads/<?php echo $row['photo']; ?>" alt="<?php echo $row['heading']; ?>" style="width:140px;"></td>
+									<td><?php echo $row['heading']; ?></td>
+									<td><?php echo $row['content']; ?></td>
+									<td><?php echo $row['button_text']; ?></td>
+									<td><?php echo $row['button_url']; ?></td>
+									<td><?php echo $row['position']; ?></td>
 									<td>										
-										<a href="faq-edit.php?id=<?php echo $row['faq_id']; ?>" class="btn btn-primary btn-xs">Edit</a>
-										<a href="#" class="btn btn-danger btn-xs" data-href="faq-delete.php?id=<?php echo $row['faq_id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>  
+										<a href="slider-edit.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-xs">Edit</a>
+										<a href="#" class="btn btn-danger btn-xs" data-href="slider-delete.php?id=<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>  
 									</td>
 								</tr>
 								<?php
@@ -48,8 +75,6 @@
 			</div>
 		</div>
 	</div>
-
-
 </section>
 
 
@@ -70,6 +95,5 @@
         </div>
     </div>
 </div>
-
 
 <?php require_once('footer.php'); ?>

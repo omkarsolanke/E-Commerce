@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 session_start();
-include 'admin/inc/config.php';
-unset($_SESSION['customer']);
+include 'inc/config.php'; 
+unset($_SESSION['user']);
 header("location: login.php"); 
 ?>
